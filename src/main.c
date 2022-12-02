@@ -1,3 +1,4 @@
+#include "Graph.h"
 #include "cycleDetection.h"
 
 #include <stdio.h>
@@ -10,10 +11,11 @@ int main(int argc, char **argv) {
 		printf("%s <filename>\n", argv[0]);
 		return 1;
 	}
-	
+  printf("Hit 0");	
 	Graph *g = Graph_read(argv[1]);
 	if(!g) return 2;
-	cycleDetection(g);
+  Graph_print(g);
+	// cycleDetection(g);
 	Graph_delete(g);
 	return 0;
 }

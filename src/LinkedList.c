@@ -20,7 +20,6 @@ void LinkedList_delete(LinkedList *ll){
     LinkedListNode *head = ll -> head;
     LinkedListNode *next;
     while (!head) {
-        free(head -> data);
         next = head -> next;
         free(head);
     }

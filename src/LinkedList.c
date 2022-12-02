@@ -71,7 +71,7 @@ void *LinkedList_popFront(LinkedList *ll) {
 LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
     LinkedListNode *next_node = ll -> head;
     // stop if the next_node is NULL or if elem is found
-    while (next_node != NULL & next_node -> data != elem) {
+    while ((next_node != NULL) & (next_node -> data != elem)) {
         next_node = next_node -> next;
     }
     // if next_node == NULL, then the elem wasn't in the list

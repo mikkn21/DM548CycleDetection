@@ -65,36 +65,75 @@ void *LinkedList_popFront(LinkedList *ll) {
         ll -> head = h -> next;
         ll -> size--;
     }
-    return h;
+    return h -> data;
 }
 
 LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
-    LinkedListNode *next_node = ll -> head;
-    // stop if the next_node is NULL or if elem is found
-    while ((next_node != NULL) & (next_node -> data != elem)) {
-        next_node = next_node -> next;
-    }
-    // if next_node == NULL, then the elem wasn't in the list
-    if (next_node == NULL) return NULL;
-    
-    // if next_node exist, we found the node that points to the elem
-    return next_node;
+  assert(ll -> head); 
+  LinkedListNode *next_node = ll -> head;
+
+  int i = 0;
+  while (i < ll -> size) {
+    if (next_node -> data == elem) {
+      return next_node;
+    } 
+    i++; 
+  }   
+  return NULL;
+
+
+    // while ((next_node != NULL) | (next_node -> data != elem)) {
+    //     next_node = next_node -> next;
+    // }
+    // // if next_node == NULL, then the elem wasn't in the list
+    // if (next_node == NULL) return NULL;
+    // 
+    // // if next_node exist, we found the node that points to the elem
+    // return next_node;
 }
 
 
 void *LinkedList_remove(LinkedList *ll, LinkedListNode *node) {
-    void *r_data;
-    // if node -> next == NULL it's tail or head/tail of a tree of size 1
-    if (node -> next == NULL) {
-        r_data = node -> data;
-    } else { // node has a prev & next in this case
-        r_data = node -> data;
-        node -> prev -> next = node -> next;
-        node -> next -> prev = node -> prev;
+
+  void *data;
+
+  // if node -> next == NULL it's tail or head/tail of a tree of size 1 
+  if (node -> next == NULL) {
+    data = node -> data;
+    
+    // case 1: tail/tail of a tree of size 1
+    if (ll -> head == node) {
+      ll -> head = NULL;
+      ll -> tail = NULL;
+    } else { // case 2: node is tail
+      ll -> tail = node -> prev;
     }
-    free(node);
-    ll -> size--;
-    return r_data;
+  } else { // node is head or has prev & next
+    data = node -> data;
+    // case 1: node is head = no prev
+    if (ll -> head == node) {
+      ll -> head = node -> next;
+    } else { // case 2: has prev & next
+      node -> prev -> next = node -> next;
+      node -> next -> prev = node -> prev;
+    }
+  } 
+  free(node);
+  ll -> size--;
+  return data;
+
+    // void *data;
+    // // if node -> next == NULL it's tail or head/tail of a tree of size 1
+    // if (node -> next == NULL) {
+    //     data = node -> data;
+    // } else { // node has a prev & next in this case
+    //     data = node -> data;
+    //     node -> prev -> next = node -> next;
+    //     node -> next -> prev = node -> prev;
+    // }
+    // free(node);
+    // ll -> size--;
+    // return data;
 }
 
 

@@ -70,7 +70,7 @@ Graph *Graph_read(const char *filename) {
 
 void Graph_delete(Graph *g) {
   // if g has no vertices/edges just free graph + *vertices
-  if (g -> numEdges > 0 | g -> numVertices > 0) {
+  if ((g -> numEdges > 0) | (g -> numVertices > 0)) {
     for(int i = 0; i < g -> numVertices; i++) {
       LinkedList_delete(g ->vertices[i].inNeighbours);
       LinkedList_delete(g ->vertices[i].outNeighbours);

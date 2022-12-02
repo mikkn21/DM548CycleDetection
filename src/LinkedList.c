@@ -1,5 +1,6 @@
 # include "LinkedList.h"
 
+#include <assert.h>
 # include <stdio.h>
 # include <stdlib.h>
 
@@ -15,15 +16,18 @@ LinkedList *LinkedList_new() {
     return new_ll;
 }
 
-
+// Shamelessly stolen from Jakob
+// no reason to reinvent the wheel
 void LinkedList_delete(LinkedList *ll){
-    LinkedListNode *head = ll -> head;
-    LinkedListNode *next;
-    while (!head) {
-        next = head -> next;
-        free(head);
-    }
-    free(ll);    
+  assert(ll);
+  LinkedListNode *next;	
+  for(LinkedListNode *node = ll->head; node; node = next) {
+    next = node->next;
+    free(node);
+  }
+  free(ll);
+
+
 }
 
 LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
@@ -60,7 +64,7 @@ void *LinkedList_popFront(LinkedList *ll) {
     }else { // more than one node in the list
         ll -> head = h -> next;
         ll -> size--;
-    } 
+    }
     return h;
 }
 

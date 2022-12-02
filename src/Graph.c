@@ -5,16 +5,6 @@
 #include <stdlib.h>
 #include <assert.h>
 
-// private helper function
-static Vertex* Vertex_find(Vertex *vertices, int id) {
-  Vertex *v;
-  int i = 0;
-  do {
-    v = &vertices[i];
-  } while (v -> id != id); 
-  return v;
-}
-
 Graph *Graph_new(int n) {
   Graph *new_graph = malloc(sizeof(Graph));
   if (!new_graph) return NULL;
@@ -42,19 +32,16 @@ Graph *Graph_new(int n) {
 // pre: g is created by Graph_new
 void Graph_addEdge(Graph *g, int i, int j) {
   Vertex *verts = g -> vertices;
-
-  Vertex *v_1 =  Vertex_find(verts, i);
-  Vertex *v_2 =  Vertex_find(verts, j);
- 
+  
   // make sure that the append worked
   // add the in-edge from i to j 
   // add the out-edge form j to i
-  assert((LinkedList_append(v_1 -> outNeighbours, v_2) != NULL));
-  assert((LinkedList_append(v_2 -> inNeighbours , v_1) != NULL));
+  assert((LinkedList_append(verts[i].outNeighbours, &verts[j]) != NULL));
+  assert((LinkedList_append(verts[j].inNeighbours , &verts[i]) != NULL));
 }
 
 Graph *Graph_read(const char *filename) {
-  printf("Hit 1");
+  printf("In Graph_read\n");
   FILE* filestream = fopen(filename, "r");
   if (!filestream) return NULL;
 
@@ -67,7 +54,6 @@ Graph *Graph_read(const char *filename) {
 
   Graph* new_g = Graph_new(g_size);
   if (!new_g) return NULL;
- printf("Hit 2");
   // (i,j) = (row, column)
   for (int i = 0; i < g_size; i++) {
     getline(&lineptr, &n, filestream);     
@@ -83,42 +69,25 @@ Graph *Graph_read(const char *filename) {
 }
 
 void Graph_delete(Graph *g) {
-  assert(g == NULL);
-  
-  for(int i = 0; i < g -> numVertices; i++) {
-    LinkedList_delete(g ->vertices[i].inNeighbours);
-    LinkedList_delete(g ->vertices[i].outNeighbours);
+  // if g has no vertices/edges just free graph + *vertices
+  if (g -> numEdges > 0 | g -> numVertices > 0) {
+    for(int i = 0; i < g -> numVertices; i++) {
+      LinkedList_delete(g ->vertices[i].inNeighbours);
+      LinkedList_delete(g ->vertices[i].outNeighbours);
+    }
   }
   free(g -> vertices);
+  free(g);
 }
 
 void Graph_print(Graph *g) {
-  printf("numVertices: %i\n numEdges: %i\n", g->numVertices, g->numEdges);
-  // 
-  // Vertex *vertices = g -> vertices;
-  //
-  // for (int i = 0; i < g -> numVertices; i++) {
-  //   LinkedList *l_out = vertices[i] . outNeighbours;
-  //   LinkedList *l_in = vertices[i] . inNeighbours;
-  // 
-  //
-  //   LinkedListNode *current = l_in -> head; 
-  //   for (int j = 0; j < l_in -> size; j++) {
-  //     Vertex  *info = current -> data;
-  //     printf("%i ", info -> id); 
-  //     *current = *current -> next;
-  //   }
-  //   printf("\n");  
-  //
-  //    LinkedListNode *current2 = l_out -> head; 
-  //   for (int k = 0; k < l_in -> size; k++) {
-  //     Vertex  *info2 = current2 -> data;
-  //     printf("%i ", info2 -> id); 
-  //     *current2 = *current2 -> next;
-
+  printf("*****************************\n");
+  printf("numVertices: %i\nnumEdges: %i\n", g->numVertices, g->numEdges);
+  int i = 0;
+  printf("id: \tout: \tin:\n");
+  while (i < g -> numVertices) {
+    printf("%i \t%i \t%i\n", i, g->vertices[i].outNeighbours -> size, g->vertices[i].inNeighbours -> size );
+    i++;
+  }
+  printf("*****************************\n");
 }
-
-
-
-
-

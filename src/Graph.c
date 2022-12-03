@@ -10,7 +10,7 @@ Graph *Graph_new(int n) {
   if (!new_graph) return NULL;
   
   new_graph -> numVertices = n;
-  new_graph -> numEdges = n;
+  new_graph -> numEdges = 0;
   
   // allocate enough mem to all the vertex needed  
   Vertex *vertices = malloc(sizeof(Vertex)* n);
@@ -41,7 +41,6 @@ void Graph_addEdge(Graph *g, int i, int j) {
 }
 
 Graph *Graph_read(const char *filename) {
-  printf("In Graph_read\n");
   FILE* filestream = fopen(filename, "r");
   if (!filestream) return NULL;
 
@@ -60,6 +59,7 @@ Graph *Graph_read(const char *filename) {
     for (int j = 0; j < g_size; j++) {
       if (lineptr[j] == '1') {
         Graph_addEdge(new_g, i, j);
+        new_g -> numEdges++;
       } 
     }
   }

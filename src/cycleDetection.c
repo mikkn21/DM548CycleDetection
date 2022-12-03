@@ -24,17 +24,13 @@ static LinkedList *list_s(Vertex *vertices, int n) {
 // remove v from u's outNeighbours
 // remove u from v's inNeighbours
 static void remove_edge(Vertex *u, Vertex *v) {
-  printf("IN REMOVE_EDGE\n");
-  printf("Looking at Vertex: %i & %i\n", u -> id, v -> id);
+  // printf("Looking at Vertex: %i & %i\n", u -> id, v -> id);
 
   LinkedList_remove(u -> outNeighbours, LinkedList_find(u -> outNeighbours, v));
-  printf("Between\n");
   LinkedList_remove(v -> inNeighbours, LinkedList_find(v -> inNeighbours, u));
-  printf("END OF REMOVE_EDGE\n");
 }
 
 
-// !!!Remember to free stuff!!!
 void cycleDetection(Graph *g) {
   LinkedList *L = LinkedList_new();
   LinkedList *S = list_s(g -> vertices, g -> numVertices);
@@ -50,26 +46,22 @@ void cycleDetection(Graph *g) {
       Vertex *current_v = node -> data;
       if (current_v -> inNeighbours -> size == 1) {
           LinkedList_append(S, current_v);
-          printf("in if\n");
       } 
       next = node->next;
       remove_edge(u, current_v);
       g -> numEdges--;
     }
-
-
-
-
   }
   if (g -> numEdges > 0) {
     printf("CYCLE DETECTED!\n");
   } else {
     LinkedListNode *n = L -> head;
-    while (!n) {
+    while (n != NULL) {
       Vertex *v_id = n -> data;
       printf("%i, ", v_id -> id );
       n = n -> next;
     }
+    printf("\n");
   }
   LinkedList_delete(L);
   LinkedList_delete(S);

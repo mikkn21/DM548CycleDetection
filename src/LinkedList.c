@@ -1,4 +1,5 @@
 # include "LinkedList.h"
+#include "Graph.h"
 
 #include <assert.h>
 # include <stdio.h>
@@ -68,45 +69,41 @@ void *LinkedList_popFront(LinkedList *ll) {
     return h -> data;
 }
 
+
+// *********************************
+// Find seems to not go into the if-statement!!
+// Fix this!
+// *********************************
 LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
   assert(ll -> head); 
   LinkedListNode *next_node = ll -> head;
 
   int i = 0;
   while (i < ll -> size) {
-    if (next_node -> data == elem) {
+    if (next_node -> data  == elem) {
       return next_node;
-    } 
+    }
     i++; 
+    next_node = next_node -> next;
   }   
   return NULL;
-
-
-    // while ((next_node != NULL) | (next_node -> data != elem)) {
-    //     next_node = next_node -> next;
-    // }
-    // // if next_node == NULL, then the elem wasn't in the list
-    // if (next_node == NULL) return NULL;
-    // 
-    // // if next_node exist, we found the node that points to the elem
-    // return next_node;
 }
 
-
 void *LinkedList_remove(LinkedList *ll, LinkedListNode *node) {
-
+  assert(node);
   void *data;
 
   // if node -> next == NULL it's tail or head/tail of a tree of size 1 
   if (node -> next == NULL) {
     data = node -> data;
     
-    // case 1: tail/tail of a tree of size 1
+    // case 1: head/tail of a tree of size 1
     if (ll -> head == node) {
       ll -> head = NULL;
       ll -> tail = NULL;
     } else { // case 2: node is tail
       ll -> tail = node -> prev;
+      node -> prev -> next = NULL;
     }
   } else { // node is head or has prev & next
     data = node -> data;
@@ -121,19 +118,6 @@ void *LinkedList_remove(LinkedList *ll, LinkedListNode *node) {
   free(node);
   ll -> size--;
   return data;
-
-    // void *data;
-    // // if node -> next == NULL it's tail or head/tail of a tree of size 1
-    // if (node -> next == NULL) {
-    //     data = node -> data;
-    // } else { // node has a prev & next in this case
-    //     data = node -> data;
-    //     node -> prev -> next = node -> next;
-    //     node -> next -> prev = node -> prev;
-    // }
-    // free(node);
-    // ll -> size--;
-    // return data;
 }
 
 

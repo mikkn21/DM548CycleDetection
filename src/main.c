@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 
   Graph *g = Graph_read(argv[1]);
   if(!g) return 2;
-  Graph_print(g);
+  // Graph_print(g);
   cycleDetection(g);
   Graph_delete(g);
   return 0;

@@ -36,24 +36,23 @@ void LinkedList_delete(LinkedList *ll){
 LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
     LinkedListNode *node = malloc(sizeof(LinkedListNode));
     if (!node) return NULL;
-    
-    // sets the new node
-    node -> next = NULL;
-    node -> prev = ll -> tail;
-    node -> data = elem;
    
     // If the list is empty set new node to head
     if (ll -> head == NULL) {
         ll -> head = node;
         ll -> tail = node;
+	node -> prev = NULL;
     }else { // if list is not empty append new node
         ll -> tail -> next = node;
+	node -> prev = ll -> tail;
         ll -> tail = node;
     }
-    ll -> size++;
-    
-    return node;
+    // sets the new node
+    node -> next = NULL;
+    node -> data = elem;
 
+    ll -> size++;
+    return node;
 }
 
 void *LinkedList_popFront(LinkedList *ll) {

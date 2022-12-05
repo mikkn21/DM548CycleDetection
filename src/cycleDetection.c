@@ -69,8 +69,6 @@ void cycleDetection(Graph *g) {
       else printf("\n");
       }
     }
-  //LinkedList_delete(L);
   free(L);
   LinkedList_delete(S);
-  //free(S);
 }

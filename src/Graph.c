@@ -69,13 +69,11 @@ Graph *Graph_read(const char *filename) {
 }
 
 void Graph_delete(Graph *g) {
-  printf("NUMVERTEX: %i\n", g -> numVertices);
   if (g -> numVertices > 0) {
     Vertex *verts = g -> vertices;  
     int i = 0;
     while ( i < g -> numVertices) {
       Vertex current_vert = verts[i];
-      printf("CURRENT AT VERTEX: %i\n", i);
       LinkedList_delete(current_vert . outNeighbours); 
       LinkedList_delete(current_vert . inNeighbours); 
       i++;

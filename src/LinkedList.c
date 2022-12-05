@@ -55,6 +55,7 @@ LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
 
 void *LinkedList_popFront(LinkedList *ll) {
     LinkedListNode *h = ll -> head;
+    void *data = h -> data;
    
     // only one node in  the list
     if (h -> next == NULL) {
@@ -66,7 +67,7 @@ void *LinkedList_popFront(LinkedList *ll) {
         ll -> size--;
     }
     free(h);
-    return h -> data;
+    return data;
 }
 
 

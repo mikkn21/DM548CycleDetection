@@ -24,12 +24,10 @@ void LinkedList_delete(LinkedList *ll){
   LinkedListNode *next;	
   for(LinkedListNode *node = ll->head; node; node = next) {
     next = node->next;
-    Vertex *id = node -> data;
-    free(node -> data);
+    // free(node -> data);
     free(node);
   }
   free(ll);
-
 
 }
 
@@ -41,10 +39,10 @@ LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
     if (ll -> head == NULL) {
         ll -> head = node;
         ll -> tail = node;
-	node -> prev = NULL;
+        node -> prev = NULL;
     }else { // if list is not empty append new node
         ll -> tail -> next = node;
-	node -> prev = ll -> tail;
+        node -> prev = ll -> tail;
         ll -> tail = node;
     }
     // sets the new node
@@ -67,6 +65,7 @@ void *LinkedList_popFront(LinkedList *ll) {
         ll -> head = h -> next;
         ll -> size--;
     }
+    free(h);
     return h -> data;
 }
 

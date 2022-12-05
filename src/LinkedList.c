@@ -24,6 +24,8 @@ void LinkedList_delete(LinkedList *ll){
   LinkedListNode *next;	
   for(LinkedListNode *node = ll->head; node; node = next) {
     next = node->next;
+    Vertex *id = node -> data;
+    free(node -> data);
     free(node);
   }
   free(ll);
@@ -70,10 +72,6 @@ void *LinkedList_popFront(LinkedList *ll) {
 }
 
 
-// *********************************
-// Find seems to not go into the if-statement!!
-// Fix this!
-// *********************************
 LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
   assert(ll -> head); 
   LinkedListNode *next_node = ll -> head;

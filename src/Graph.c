@@ -69,11 +69,16 @@ Graph *Graph_read(const char *filename) {
 }
 
 void Graph_delete(Graph *g) {
-  // if g has no vertices/edges just free graph + *vertices
-  if ((g -> numEdges > 0) | (g -> numVertices > 0)) {
-    for(int i = 0; i < g -> numVertices; i++) {
-      LinkedList_delete(g ->vertices[i].inNeighbours);
-      LinkedList_delete(g ->vertices[i].outNeighbours);
+  printf("NUMVERTEX: %i\n", g -> numVertices);
+  if (g -> numVertices > 0) {
+    Vertex *verts = g -> vertices;  
+    int i = 0;
+    while ( i < g -> numVertices) {
+      Vertex current_vert = verts[i];
+      printf("CURRENT AT VERTEX: %i\n", i);
+      LinkedList_delete(current_vert . outNeighbours); 
+      LinkedList_delete(current_vert . inNeighbours); 
+      i++;
     }
   }
   free(g -> vertices);

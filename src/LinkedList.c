@@ -24,7 +24,7 @@ void LinkedList_delete(LinkedList *ll){
   LinkedListNode *next;	
   for(LinkedListNode *node = ll->head; node; node = next) {
     next = node->next;
-    // free(node -> data);
+    free(node -> data);
     free(node);
   }
   free(ll);

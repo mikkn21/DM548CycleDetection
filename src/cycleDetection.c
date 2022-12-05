@@ -60,13 +60,15 @@ void cycleDetection(Graph *g) {
     while (i < L -> size) {
       Vertex *v_id = n -> data;
       printf("%i", v_id -> id );
-      n = n -> next;
+      LinkedListNode *next = n -> next;
+      free(n);
+      n = next;
       i++;
 
       if (i < L -> size) printf(", ");
       else printf("\n");
       }
     }
-  LinkedList_delete(L);
+  free(L);
   LinkedList_delete(S);
 }

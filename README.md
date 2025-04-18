@@ -15,7 +15,7 @@ The goal of this assignment is to:
 ➡️ **[Project description](./assets/desc.pdf)** ⬅️
 
 >[!Note]
-> This repository was originally created for submission to a Git server hosted by IMADA (Department of Mathematics and Computer Science, SDU). A CI pipeline was set up using Drone CI to automatically test the solution upon each commit (see [.drone.yml](./drone.yml)). Some commits were made specifically to trigger these automated tests.
+> This repository was originally created for submission to a Git server hosted by IMADA (Department of Mathematics and Computer Science, SDU). A CI pipeline was set up using Drone CI to automatically test the solution upon each commit (see [.drone.yml](./.drone.yml). Some commits were made specifically to trigger these automated tests.
 
 
 ## Repository Structure
